@@ -1,4 +1,4 @@
-package com.example.admin.user;
+package com.example.petshop.admin.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
