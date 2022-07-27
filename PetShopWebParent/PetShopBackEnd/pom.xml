@@ -6,7 +6,6 @@
 		<groupId>com.example</groupId>
 		<artifactId>PetShopWebParent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
-
 	</parent>
 	<artifactId>PetShopBackEnd</artifactId>
 	<name>PetShopBackEnd</name>

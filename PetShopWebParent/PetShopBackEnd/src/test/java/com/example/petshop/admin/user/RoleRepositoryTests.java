@@ -15,20 +15,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
-public class RoleRepositoryTests {
+class RoleRepositoryTests {
 
     @Autowired
     private RoleRepository repo;
 
     @Test
-    public void testCreateFirstRole(){
+    void testCreateFirstRole(){
         Role roleAdmin = new Role("Admin", "manage everything");
         Role savedRole = repo.save(roleAdmin);
-        assertThat(savedRole.getId()).isGreaterThan(0);
+        assertThat(savedRole.getId()).isPositive();
     }
 
     @Test
-    public void testCreateRestRoles(){
+    void testCreateRestRoles(){
         Role roleSalesperson = new Role("Salesperson", "manage prices," +
                 " customers, shipping, orders and sales report");
         Role roleEditor = new Role("Editor", "manage categories," +
