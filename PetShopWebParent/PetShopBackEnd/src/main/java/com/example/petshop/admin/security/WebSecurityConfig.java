@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Override
     @Bean
     public UserDetailsService userDetailsService() {
         return new PetShopUserDetailsService();

@@ -6,12 +6,14 @@ import java.util.Objects;
 @Entity
 @Table(name= "roles")
 public class Role {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Using GenerationType.AUTO lets
+    // Hibernate decides whichstrategy to be used depending on which database.
+    // The GenerationType. IDENTITY tells Hibernate consider it as identity column.
     private Integer id;
-@Column(length = 40, nullable = false, unique = true)
+    @Column(length = 40, nullable = false, unique = true)
     private String name;
-@Column(length = 150, nullable = false)
+    @Column(length = 150, nullable = false)
     private String description;
 
     public Role() {
@@ -54,11 +56,15 @@ public class Role {
         this.description = description;
     }
 
+    //the false won't be returned if a Role instance is passed to the equals method.
+    // But if it is not a Person instance then the getClass() != obj.getClass()
+    // will be true and the equals will exit with false as the return value.
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null || getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass()) //The obj.getClass() will return the runtime class of the object,
+            // that is it will check at runtime what is the Object reference is pointing to.
             return false;
         Role other = (Role) obj;
         if(id == null){
@@ -73,9 +79,10 @@ public class Role {
     public String toString() {
         return this.name;
     }
-
+//It is to ensure that a user won't be assigned a role twice,
+// and also to make the edit/update user function in the view with Thymeleaf working correctly.
     @Override
-    public int hashCode() {
+    public int hashCode() { //unique id
         return Objects.hash(id);
     }
 }

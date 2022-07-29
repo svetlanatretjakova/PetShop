@@ -8,9 +8,11 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.email = :email")
-    public User getUserByEmail(@Param("email") String email);
+    User getUserByEmail(@Param("email") String email);
 
     //dont have to specify any sql statement
+    //method is defined by JpaRepository and Spring Data will generate implementation class at runtime.
+    //It is used for checking if an entity exists by ID,
     Long countById(Integer id);
 
     @Query("UPDATE User u SET u.enabled = ?2 WHERE u.id = ?1")

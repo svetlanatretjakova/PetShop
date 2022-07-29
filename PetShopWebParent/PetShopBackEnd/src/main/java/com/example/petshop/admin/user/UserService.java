@@ -9,8 +9,13 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 @Service
+// using @Transactional in Service classes to ensure data integrity. It can be use at class level or method level.
+//use @Transactional in Service class if you execute an update query in repository class.
+//all methods declared in repository classes are transactional by default.
+
 @Transactional
 public class UserService {
 
@@ -61,15 +66,12 @@ public class UserService {
         boolean isCreatingNew = (id == null);
 
         if(isCreatingNew) {
-            if (userByEmail != null) return false;
+            return false;
         } else {
-            if (userByEmail.getId() != id) {
-                return false;
-            }
+            return Objects.equals(userByEmail.getId(), id);
         }
-        return true;
     }
-//returns full user object will all details, countbyid just returns a number
+    //returns full user object will all details, countbyid just returns a number
     public User get(Integer id) throws UserNotFoundException {
         try {
             return userRepo.findById(id).get();
@@ -79,11 +81,11 @@ public class UserService {
     }
 
     public void delete(Integer id) throws UserNotFoundException {
-       Long countById =  userRepo.countById(id);
-       if (countById == null || countById == 0) {
-           throw new UserNotFoundException("Could not find any user with ID" + id);
-       }
-       userRepo.deleteById(id);
+        Long countById =  userRepo.countById(id);
+        if (countById == null || countById == 0) {
+            throw new UserNotFoundException("Could not find any user with ID" + id);
+        }
+        userRepo.deleteById(id);
     }
 
     public void updateUserEnabledStatus(Integer id, boolean enabled) {

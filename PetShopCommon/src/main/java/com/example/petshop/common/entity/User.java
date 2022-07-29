@@ -8,7 +8,9 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Using GenerationType.AUTO lets Hibernate decides which strategy
+    // to be used depending on which database.
+    // The GenerationType. IDENTITY tells Hibernate consider it as identity column.
     private Integer id;
 
     @Column(length = 128, nullable = false, unique = true)
@@ -28,7 +30,7 @@ public class User {
 
     private boolean enabled;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -39,7 +41,8 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, String firstName, String lastName) {
+    public User(Integer id, String email, String password, String firstName, String lastName) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
